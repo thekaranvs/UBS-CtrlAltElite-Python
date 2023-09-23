@@ -54,7 +54,7 @@ def getFirstViz(input):
                 instrumentsBounds[j] -= subValue
         
     instrumentsBounds[-1] = 6.28318531
-    instrumentsBounds = [round(val, 8) for val in instrumentsBounds]
+    instrumentsBounds = [round(val, 7) for val in instrumentsBounds]
     print(calcSum)
     return {"instruments": instrumentsBounds}
 

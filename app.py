@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
+import io
 from solutions.lazyDev import *
 from solutions.greedyMonkey import *
 from solutions.digitalColony import *
@@ -62,6 +63,11 @@ def digitalColony():
 def parkingLot():
   content = request.json
   return jsonify(returnProfit(content))
+
+@app.route('/payload_crackme', methods=['GET'])
+def payloadCrackme():
+   with open("solutions/payload_crackme", 'rb') as bites:
+        return send_file(io.BytesIO(bites.read()), download_name='payload_crackme')
 
 # main driver function
 if __name__ == '__main__':
