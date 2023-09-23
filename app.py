@@ -17,7 +17,7 @@ def lazyDev():
   content = request.json
   return jsonify(getNextProbableWords(content['classes'], content['statements']))
 
-@app.route('/greedyMonkey', methods=['POST'])
+@app.route('/greedymonkey', methods=['POST'])
 def greedyMonkey():
   text = request.get_data(as_text=True)
   return returnFruits(text)
