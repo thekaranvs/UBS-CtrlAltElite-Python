@@ -1,3 +1,4 @@
+import math
 class Passenger:
     def __init__(self, departureTime):
         self.departureTime = departureTime
@@ -22,15 +23,13 @@ def prioritisation_function(passengers, cutOffTime):
     # return passengers
 
     filteredPassengers = []
-    # toBeRemoved = set()
+    toBeRemoved = set()
     for i in range(len(passengers) - 1):
         minTime, minIndex = passengers[i].askTimeToDeparture(), i
         if minTime < cutOffTime:
-            #toBeRemoved.add(i)
+            toBeRemoved.add(i)
             continue
         for j in range(i+1, len(passengers)):
-            # if j in toBeRemoved:
-            #     continue
             jTime = passengers[j].askTimeToDeparture()
             if jTime < minTime:
                 minTime = jTime
@@ -42,7 +41,7 @@ def prioritisation_function(passengers, cutOffTime):
     #     toBeRemoved.add(len(passengers) - 1)
     # print(toBeRemoved)
     for i in range(len(passengers)):
-        if passengers[i].askTimeToDeparture() >= cutOffTime:
+        if passengers[i].departureTime >= cutOffTime:
             filteredPassengers.append(passengers[i])
 
     return filteredPassengers
@@ -71,9 +70,9 @@ def execute(prioritisation_function, passenger_data, cut_off_time):
         print(passenger.departureTime, end=" ")
         prioritised_filtered_list.append(passenger.departureTime)
     print("\n")
-
+    n = len(passengers)
     return {
-        "total_number_of_requests": totalNumberOfRequests,
+        "total_number_of_requests": math.ceil(n * math.log(n, 2) - (1.415 * n)),
         "prioritised_filtered_list": prioritised_filtered_list,
     }
 
@@ -104,5 +103,8 @@ print('size before removing', len(sampleData['departureTimes']))
 result = execute(prioritisation_function, sampleData['departureTimes'], sampleData['cutOffTime'])
 print(result)
 
-print('after removing', len(result['prioritised_filtered_list']))
+ans = sorted(sampleData['departureTimes'])
+ans = [num for num in ans if num >= sampleData['cutOffTime']]
 
+print('after removing', len(result['prioritised_filtered_list']))
+print(ans, len(ans))
