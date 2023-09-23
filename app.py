@@ -7,6 +7,7 @@ from solutions.swissbyte import *
 from solutions.airportCheckin import *
 from solutions.calendarScheduling import *
 from solutions.pieChart import *
+from solutions.parkingLot import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -52,17 +53,15 @@ def pieChart():
    inputData = request.json
    return jsonify(pieChartEntry(inputData))
 
-# main driver function
-if __name__ == '__main__':
- 
-    # run() method of Flask class runs the application
-    # on the local development server.
-    app.run()
-
 @app.route('/digital-colony', methods=['POST'])
 def digitalColony():
    content = request.json
    return jsonify(digitalColonyEntry(content))
+
+@app.route('/parking-lot', methods=['POST'])
+def parkingLot():
+  content = request.json
+  return jsonify(returnProfit(content))
 
 # main driver function
 if __name__ == '__main__':
