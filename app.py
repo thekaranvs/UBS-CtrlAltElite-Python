@@ -5,6 +5,8 @@ from solutions.digitalColony import *
 from solutions.railwayBuilder import *
 from solutions.swissbyte import *
 from solutions.airportCheckin import *
+from solutions.calendarScheduling import *
+from solutions.pieChart import *
 from solutions.parkingLot import *
 
 # Flask constructor takes the name of
@@ -40,6 +42,16 @@ def swissByte():
 def airportCheckin():
    inputData = request.json
    return jsonify(airportCheckinEntry(inputData))
+
+@app.route('/calendar-scheduling', methods=['POST'])
+def calendarScheduling():
+   inputData = request.json
+   return jsonify(schedule_lessons(inputData))
+
+@app.route('/pie-chart', methods=['POST'])
+def pieChart():
+   inputData = request.json
+   return jsonify(pieChartEntry(inputData))
 
 @app.route('/digital-colony', methods=['POST'])
 def digitalColony():

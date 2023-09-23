@@ -93,19 +93,3 @@ def airportCheckinEntry(input):
             'numberOfRequests': result['total_number_of_requests']
         })
     return output
-
-
-sampleData = {
-    "id": "hiThere",
-    "cutOffTime": 44,
-    "departureTimes": [43, 41, 34, 30, 36, 41, 32, 39, 32, 49, 42, 41, 115, 110, 39, 115, 59, 32, 87, 35, 60, 32, 33, 32, 39, 41, 37, 37, 97, 42, 38, 36, 96, 38, 41, 43, 38, 56, 40, 67, 39, 50, 37, 39, 30, 39, 32, 36, 43, 42, 43, 34, 41, 30, 34, 36, 86, 39, 63, 43, 32, 42, 91, 49, 38, 94, 34, 35, 38, 35, 31, 33, 35, 37, 33, 65, 38, 31, 33, 117, 38, 36, 113, 32, 43, 40, 52, 38, 41, 43, 40, 34, 31, 32, 39, 113]
-}
-print('size before removing', len(sampleData['departureTimes']))
-result = execute(prioritisation_function, sampleData['departureTimes'], sampleData['cutOffTime'])
-print(result)
-
-ans = sorted(sampleData['departureTimes'])
-ans = [num for num in ans if num >= sampleData['cutOffTime']]
-
-print('after removing', len(result['prioritised_filtered_list']))
-print(ans, len(ans))
