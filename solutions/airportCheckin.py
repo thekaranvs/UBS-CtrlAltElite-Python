@@ -82,6 +82,8 @@ def airportCheckinEntry(input):
 
     for case in input:
         caseID = case['id']
+        print(case['cutOffTime'])
+        print(case['departureTimes'])
         result = execute(prioritisation_function, case['departureTimes'], case['cutOffTime'])
 
         output.append({
