@@ -109,7 +109,10 @@ def returnProfit(jsonObj):
     profits.sort(reverse=True)
     
     # Find the combination with the highest profit
-    max_profit, buses_assigned, cars_assigned, bikes_assigned = profits[0]
+    if len(profits) > 0:
+        max_profit, buses_assigned, cars_assigned, bikes_assigned = profits[0]
+    else:
+        max_profit, buses_assigned, cars_assigned, bikes_assigned = [0, 0, 0, 0]
     
     # Calculate the rejected vehicles
     buses_rejected = max(numBuses - buses_assigned, 0)
