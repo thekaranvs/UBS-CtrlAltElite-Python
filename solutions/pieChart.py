@@ -1,35 +1,53 @@
 import math
 
 def getFirstViz(input):
-    amtInvested = []
+    investments = []
 
     for instrument in input['data']:
-        amtInvested.append(instrument['quantity'] * instrument['price'])
+        investments.append(instrument['quantity'] * instrument['price'])
 
-    amtInvested.sort(reverse=True)
-    totalAmt = sum(amtInvested)
-    radianBounds = [0]
-    tinyAngles, radiansToSubtract = 0, 0
+    investments.sort(reverse=True)
+    totalAmt = sum(investments)
 
-    for amt in amtInvested:
-        angle = (amt / totalAmt) * 2 * math.pi
+    instrumentsBounds = [0]
+    tinyAngles, radiansToSubtract, adjustedIndex = 0, 0, -1
 
+    # for amt in investments:
+    #     angle = (amt / totalAmt) * 2 * math.pi
+    #     if (amt / totalAmt) < 0.0005:
+    #         tinyAngles += 1
+    #         radiansToSubtract += (0.0005 * 2 * math.pi - angle)
+    #         angle = 0.0005 * 2 * math.pi
+    #     instrumentsBounds.append(instrumentsBounds[-1] + angle)
+
+    for i, amt in enumerate(investments):
         if (amt / totalAmt) < 0.0005:
-            tinyAngles += 1
-            radiansToSubtract += (0.0005 * 2 * math.pi - angle)
-            angle = 0.0005 * 2 * math.pi
+            adjustedIndex = i
+            tinyAngles = len(investments) - i
+            radiansToSubtract = ((0.0005 * 2 * math.pi * tinyAngles) - (sum(investments[i:]) / totalAmt) * 2 * math.pi)
+            for _ in range(tinyAngles):
+                instrumentsBounds.append(instrumentsBounds[-1] + (0.0005 * 2 * math.pi))
+            break
+        angle = (amt / totalAmt) * 2 * math.pi 
+        instrumentsBounds.append(instrumentsBounds[-1] + angle)
 
-        radianBounds.append(radianBounds[-1] + angle)
+    print(investments)
+    print(radiansToSubtract)
+    print(instrumentsBounds)
+
     if tinyAngles != 0:
-        angleDiffs = [radianBounds[i+1] - radianBounds[i] for i in range(0, len(radianBounds)-1)]
+        angleDiffs = [instrumentsBounds[i+1] - instrumentsBounds[i] for i in range(0, len(instrumentsBounds)-1)]
+        print(angleDiffs)
         for i, angleDiff in enumerate(angleDiffs):
             if not (math.isclose(angleDiff, 0.0005 * 2 * math.pi)):
-                print('adjusting', amtInvested[i], radianBounds[i+1], (totalAmt - (0.005 * totalAmt * tinyAngles)))
-                subValue = (radiansToSubtract * (amtInvested[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
-                for j in range(i+1, len(radianBounds)):
-                    radianBounds[j] = radianBounds[j] - subValue
+                subValue = (radiansToSubtract * (investments[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
+                for j in range(i+1, len(instrumentsBounds)):
+                    instrumentsBounds[j] = instrumentsBounds[j] - subValue
 
-    return {"instruments": radianBounds}
+    # if tinyAngles != 0:
+    #     subValue = (radiansToSubtract * (investments[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
+    instrumentsBounds = [round(val, 8) for val in instrumentsBounds]
+    return {"instruments": instrumentsBounds}
 
 def getSecondViz(input):
 
@@ -38,22 +56,22 @@ def getSecondViz(input):
     sectorBounds, sectorMap = [1.04798295], {}
     assetBounds, assetMap = [1.57236712], {}
     regionBounds, regionMap = [2.09675130], {}
-    amtInvested = []
+    investments = []
 
     for instrument in input['data']:
         currencyMap[instrument['currency']] = currencyMap.get(instrument['currency'], 0) + (instrument['quantity'] * instrument['price'])
         sectorMap[instrument['sector']] = sectorMap.get(instrument['sector'], 0) + (instrument['quantity'] * instrument['price'])
         assetMap[instrument['assetClass']] = assetMap.get(instrument['assetClass'], 0) + (instrument['quantity'] * instrument['price'])
         regionMap[instrument['region']] = regionMap.get(instrument['region'], 0) + (instrument['quantity'] * instrument['price'])
-        amtInvested.append(instrument['quantity'] * instrument['price'])
+        investments.append(instrument['quantity'] * instrument['price'])
 
-    amtInvested.sort()
-    totalAmt = sum(amtInvested)
+    investments.sort()
+    totalAmt = sum(investments)
     instrumentBounds = [3.66519143]
     
     tinyAngles, radiansToSubtract = 0, 0
 
-    for amt in amtInvested:
+    for amt in investments:
         angle = (amt / totalAmt) * (2/3) * math.pi
         if angle < 0.00314159:
             tinyAngles += 1
@@ -62,7 +80,7 @@ def getSecondViz(input):
         instrumentBounds.append(instrumentBounds[-1] + angle)
     
     if tinyAngles != 0:
-        denom = len(amtInvested) - tinyAngles - 1
+        denom = len(investments) - tinyAngles - 1
         for i, angle in enumerate(instrumentBounds):
             if i == 0:
                 continue
