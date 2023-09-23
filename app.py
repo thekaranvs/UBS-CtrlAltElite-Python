@@ -6,6 +6,7 @@ from solutions.railwayBuilder import *
 from solutions.swissbyte import *
 from solutions.airportCheckin import *
 from solutions.calendarScheduling import *
+from solutions.pieChart import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -45,6 +46,11 @@ def airportCheckin():
 def calendarScheduling():
    inputData = request.json
    return jsonify(schedule_lessons(inputData))
+
+@app.route('/pie-chart', methods=['POST'])
+def pieChart():
+   inputData = request.json
+   return jsonify(pieChartEntry(inputData))
 
 # main driver function
 if __name__ == '__main__':
