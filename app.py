@@ -5,6 +5,7 @@ from solutions.digitalColony import *
 from solutions.railwayBuilder import *
 from solutions.swissbyte import *
 from solutions.airportCheckin import *
+from solutions.calendarScheduling import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -39,6 +40,11 @@ def swissByte():
 def airportCheckin():
    inputData = request.json
    return jsonify(airportCheckinEntry(inputData))
+
+@app.route('/calendar-scheduling', methods=['POST'])
+def calendarScheduling():
+   inputData = request.json
+   return jsonify(schedule_lessons(inputData))
 
 # main driver function
 if __name__ == '__main__':
