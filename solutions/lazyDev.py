@@ -1,18 +1,3 @@
-from flask import Flask, request, jsonify
- 
-# Flask constructor takes the name of
-# current module (__name__) as argument.
-app = Flask(__name__)
- 
-# The route() function of the Flask class is a decorator,
-# which tells the application which URL should call
-# the associated function.
-@app.route('/')
-# ‘/’ URL is bound with hello_world() function.
-def hello_world():
-    return 'Hello World'
-
-
 # Checks if any of the elements in the list contains another class as element (making the parent class polymorphic and thus returning a list of empty string)
 def containsKey(l, d):
   return any(i in d for i in l)
@@ -46,10 +31,6 @@ def findProbableWordsList(listObj,
   return (filteredVarNames[:idx])
 
 
-@app.route('/lazy-developer', methods=['POST'])
-def lazyDev():
-  content = request.json
-  return jsonify(getNextProbableWords(content['classes'], content['statements']))
 # Assumptions made:
 # 1. A class has only one name i.e. has only one key for it's values
 # 2. A class doesn't extend container datatypes and thus we cannot have classA<string> datatype
