@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from solutions.lazyDev import *
+from solutions.digitalColony import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -14,3 +15,15 @@ def hello_world():
 def lazyDev():
   content = request.json
   return jsonify(getNextProbableWords(content['classes'], content['statements']))
+
+@app.route('/digital-colony', methods=['POST'])
+def digitalColony():
+   content = request.json
+   return jsonify(digitalColonyEntry(content))
+
+# main driver function
+if __name__ == '__main__':
+ 
+    # run() method of Flask class runs the application
+    # on the local development server.
+    app.run()
