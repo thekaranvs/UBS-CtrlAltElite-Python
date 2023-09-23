@@ -9,29 +9,29 @@ def getFirstViz(input):
     amtInvested.sort(reverse=True)
     totalAmt = sum(amtInvested)
     radianBounds = [0]
-    tinyInvestmentsMade, radiansToSubtract = 0, 0
+    tinyAngles, radiansToSubtract = 0, 0
 
     for amt in amtInvested:
         angle = (amt / totalAmt) * 2 * math.pi
 
         if angle < 0.00314159:
-            tinyInvestmentsMade += 1
+            tinyAngles += 1
             radiansToSubtract += (0.00314159 - angle)
             angle = 0.00314159
 
         radianBounds.append(radianBounds[-1] + angle)
     
-    if tinyInvestmentsMade != 0:
+    if tinyAngles != 0:
         for i, angle in enumerate(radianBounds):
             if angle == 0 or angle == 0.00314159: continue
             else:
-                radianBounds[i] = radianBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyInvestmentsMade))
+                radianBounds[i] = radianBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyAngles))
 
     return radianBounds
 
 def getSecondViz(input):
 
-    radianRightArk = 0.5212425666666
+    radianRightArk = 0.5212425667
     currencyBounds, currencyMap = [0.52359878], {}
     sectorBounds, sectorMap = [1.04798295], {}
     assetBounds, assetMap = [1.57236712], {}
@@ -49,18 +49,23 @@ def getSecondViz(input):
     totalAmt = sum(amtInvested)
     instrumentBounds = [3.66519143]
     
-    tinyInvestmentsMade, radiansToSubtract = 0, 0
+    tinyAngles, radiansToSubtract = 0, 0
 
     for amt in amtInvested:
         angle = (amt / totalAmt) * (2/3) * math.pi
-
         if angle < 0.00314159:
-            tinyInvestmentsMade += 1
+            tinyAngles += 1
             radiansToSubtract += (0.00314159 - angle)
             angle = 0.00314159
-
         instrumentBounds.append(instrumentBounds[-1] + angle)
     
+    if tinyAngles != 0:
+        for i, angle in enumerate(instrumentBounds):
+            if angle == 0 or angle == 0.00314159: continue
+            else:
+                instrumentBounds[i] = instrumentBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyAngles))
+    
+    tinyAngles, radiansToSubtract = 0, 0
     currencyMap = sorted(currencyMap.items(), key=lambda x:x[1], reverse=True)
     for currency, value in currencyMap:
         angle = (value / totalAmt) * radianRightArk # 0.52123714083
@@ -81,11 +86,6 @@ def getSecondViz(input):
         angle = (value / totalAmt) * radianRightArk # 0.52123714083
         regionBounds.append(regionBounds[-1] + angle)
     
-    # if tinyInvestmentsMade != 0:
-    #     for i, angle in enumerate(radianBounds):
-    #         if angle == 0 or angle == 0.00314159: continue
-    #         else:
-    #             radianBounds[i] = radianBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyInvestmentsMade))
     return {
         "instruments": instrumentBounds,
         "currency": currencyBounds,
@@ -95,7 +95,13 @@ def getSecondViz(input):
     }
 
 def pieChartEntry(input):
+    print(input)
+    print('-------------------')
     if input['part'] == 'FIRST':
-        return getFirstViz(input)
+        result = getFirstViz(input)
+        print(result)
+        return result
     else:
-        return getSecondViz(input)
+        result = getSecondViz(input)
+        print(result)
+        return result
