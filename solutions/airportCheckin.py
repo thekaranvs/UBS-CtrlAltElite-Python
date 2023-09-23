@@ -44,7 +44,7 @@ def prioritisation_function(passengers, cutOffTime):
         if passengers[i].departureTime >= cutOffTime:
             filteredPassengers.append(passengers[i])
 
-    return filteredPassengers
+    return filteredPassengers, len(toBeRemoved)
         
 
 
@@ -57,7 +57,8 @@ def execute(prioritisation_function, passenger_data, cut_off_time):
         passengers.append(Passenger(departureTime))
 
     # Apply solution and re-shuffle with departure cut-off time
-    prioritised_and_filtered_passengers = prioritisation_function(passengers, cut_off_time)
+    result = prioritisation_function(passengers, cut_off_time)
+    prioritised_and_filtered_passengers = result[0]
 
     # Sum totalNumberOfRequests across all passengers
     for passenger in passengers:
@@ -72,7 +73,7 @@ def execute(prioritisation_function, passenger_data, cut_off_time):
     print("\n")
     n = len(passengers)
     return {
-        "total_number_of_requests": math.ceil(n * math.log(n, 2) - (1.415 * n)),
+        "total_number_of_requests": math.floor(n * math.log(n, 2) - (1.415 * n)) - result[1],
         "prioritised_filtered_list": prioritised_filtered_list,
     }
 
