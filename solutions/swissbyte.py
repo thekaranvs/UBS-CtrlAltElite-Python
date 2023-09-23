@@ -32,7 +32,7 @@ def runCode(code, cases):
         except Exception:
             is_solvable = False
 
-        variables = {var: value for var, value in variables.items() if var in whitelist}
+        variables = {var: int(value) for var, value in variables.items() if var in whitelist}
 
         outcome = {
             'is_solvable': is_solvable,
