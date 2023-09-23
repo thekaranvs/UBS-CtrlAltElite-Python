@@ -23,7 +23,7 @@ def greedyMonkey():
   text = request.get_data(as_text=True)
   return returnFruits(text)
 
-@app.route('/evaluate', methods=['POST'])
+@app.route('/railway-builder', methods=['POST'])
 def railwayBuilder():
    inputData = request.json
    return jsonify(railwayBuilderEntry(inputData))
