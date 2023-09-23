@@ -10,8 +10,24 @@ def returnFruits(text):
     v = case["v"]
     f = case["f"]
 
+    # n = len(f)
+    # f_sorted = sorted(f, key=lambda x: x[2] / x[1], reverse=True)
+
+    # total_value = 0
+    # remaining_weight = w
+    # remaining_volume = v
+
+    # for i in range(n):
+    #     weight, volume, value = f_sorted[i]
+    #     if weight <= remaining_weight and volume <= remaining_volume:
+    #         total_value += value
+    #         remaining_weight -= weight
+    #         remaining_volume -= volume
+
+    # return str(total_value)
+
     n = len(f)
-    dp = [[0 for _ in range(v + 1)] for _ in range(w + 1)]
+    dp = [[0] * (v + 1) for _ in range(w + 1)]
 
     for i in range(1, n + 1):
         weight, volume, value = f[i-1]

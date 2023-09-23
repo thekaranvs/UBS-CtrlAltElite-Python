@@ -3,6 +3,7 @@ from solutions.lazyDev import *
 from solutions.greedyMonkey import *
 from solutions.digitalColony import *
 from solutions.railwayBuilder import *
+from solutions.swissbyte import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -27,6 +28,11 @@ def greedyMonkey():
 def railwayBuilder():
    inputData = request.json
    return jsonify(railwayBuilderEntry(inputData))
+
+@app.route('/swissbyte', methods=['POST'])
+def swissByte():
+  content = request.json
+  return jsonify(runCode(content['code'], content['cases']))
 
 # main driver function
 if __name__ == '__main__':
