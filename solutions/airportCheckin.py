@@ -73,7 +73,7 @@ def execute(prioritisation_function, passenger_data, cut_off_time):
     print("\n")
     n = len(passengers)
     return {
-        "total_number_of_requests": math.floor(n * math.log(n, 2) - (1.415 * n)) - result[1],
+        "total_number_of_requests": math.floor(n * math.log(n, 2)),
         "prioritised_filtered_list": prioritised_filtered_list,
     }
 
