@@ -4,6 +4,7 @@ from solutions.greedyMonkey import *
 from solutions.digitalColony import *
 from solutions.railwayBuilder import *
 from solutions.swissbyte import *
+from solutions.airportCheckin import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -33,6 +34,11 @@ def railwayBuilder():
 def swissByte():
   content = request.json
   return jsonify(runCode(content['code'], content['cases']))
+
+@app.route('/airport', methods=['POST'])
+def airportCheckin():
+   inputData = request.json
+   return jsonify(airportCheckinEntry(inputData))
 
 # main driver function
 if __name__ == '__main__':
