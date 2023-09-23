@@ -35,18 +35,27 @@ def getFirstViz(input):
     print(radiansToSubtract)
     print(instrumentsBounds)
 
-    if tinyAngles != 0:
-        angleDiffs = [instrumentsBounds[i+1] - instrumentsBounds[i] for i in range(0, len(instrumentsBounds)-1)]
-        print(angleDiffs)
-        for i, angleDiff in enumerate(angleDiffs):
-            if not (math.isclose(angleDiff, 0.0005 * 2 * math.pi)):
-                subValue = (radiansToSubtract * (investments[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
-                for j in range(i+1, len(instrumentsBounds)):
-                    instrumentsBounds[j] = instrumentsBounds[j] - subValue
-
     # if tinyAngles != 0:
-    #     subValue = (radiansToSubtract * (investments[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
+    #     angleDiffs = [instrumentsBounds[i+1] - instrumentsBounds[i] for i in range(0, len(instrumentsBounds)-1)]
+    #     print(angleDiffs)
+    #     for i, angleDiff in enumerate(angleDiffs):
+    #         if not (math.isclose(angleDiff, 0.0005 * 2 * math.pi)):
+    #             subValue = (radiansToSubtract * (investments[i] / (totalAmt - (0.0005 * totalAmt * tinyAngles))))
+    #             for j in range(i+1, len(instrumentsBounds)):
+    #                 instrumentsBounds[j] = instrumentsBounds[j] - subValue
+    calcSum = 0
+    if tinyAngles != 0:
+        for i in range(0, adjustedIndex):
+            
+            calcSum += investments[i] / (totalAmt - (sum(investments[adjustedIndex:])))
+            subValue = (radiansToSubtract * (investments[i] / (totalAmt - (sum(investments[adjustedIndex:])))))
+            print(investments[i], subValue)
+            for j in range(i+1, len(instrumentsBounds) - 1):
+                instrumentsBounds[j] -= subValue
+        
+    instrumentsBounds[-1] = 6.28318531
     instrumentsBounds = [round(val, 8) for val in instrumentsBounds]
+    print(calcSum)
     return {"instruments": instrumentsBounds}
 
 def getSecondViz(input):
