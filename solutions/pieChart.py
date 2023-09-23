@@ -1,5 +1,7 @@
 import math
 
+input = {'data': [{'quantity': 30, 'price': 150.0, 'currency': 'HKD', 'sector': 'Technology', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 4, 'price': 1.5, 'currency': 'HKD', 'sector': 'Other', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 40, 'price': 275.0, 'currency': 'JPY', 'sector': 'Pharmaceutical', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 2, 'price': 4.0, 'currency': 'HKD', 'sector': 'ECommerce', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 35, 'price': 100.0, 'currency': 'RMB', 'sector': 'Technology', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 10, 'price': 0.1, 'currency': 'JPY', 'sector': 'Finance', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 5, 'price': 1.0, 'currency': 'HKD', 'sector': 'Technology', 'assetClass': 'Equity', 'region': 'APAC'}, {'quantity': 97, 'price': 10.0, 'currency': 'HKD', 'sector': 'ECommerce', 'assetClass': 'Equity', 'region': 'APAC'}], 'part': 'FIRST'}
+
 def getFirstViz(input):
     amtInvested = []
 
@@ -14,17 +16,16 @@ def getFirstViz(input):
     for amt in amtInvested:
         angle = (amt / totalAmt) * 2 * math.pi
 
-        if angle < 0.00314159:
+        if angle < 0.0005 * math.pi:
             tinyAngles += 1
-            radiansToSubtract += (0.00314159 - angle)
-            angle = 0.00314159
+            radiansToSubtract += (0.0005 * math.pi - angle)
+            angle = 0.0005 * math.pi
 
         radianBounds.append(radianBounds[-1] + angle)
     
     if tinyAngles != 0:
         for i, angle in enumerate(radianBounds):
-            if angle == 0 or angle == 0.00314159: continue
-            else:
+            if not (angle == 0 or angle == 0.0005 * math.pi):
                 radianBounds[i] = radianBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyAngles))
 
     return {"instruments": radianBounds}
@@ -105,3 +106,5 @@ def pieChartEntry(input):
         result = getSecondViz(input)
         print(result)
         return result
+
+print(pieChartEntry(input))
