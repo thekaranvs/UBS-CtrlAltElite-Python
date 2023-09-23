@@ -27,7 +27,7 @@ def getFirstViz(input):
             else:
                 radianBounds[i] = radianBounds[i] - (radiansToSubtract / (len(amtInvested) - tinyAngles))
 
-    return radianBounds
+    return {"instruments": radianBounds}
 
 def getSecondViz(input):
 
