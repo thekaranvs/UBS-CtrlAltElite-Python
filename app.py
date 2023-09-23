@@ -71,7 +71,7 @@ def payloadCrackme():
 
 @app.route('/payload_stack', methods=['GET'])
 def payloadStack():
-   with open("solutions/payload_crackme", 'rb') as bites:
+   with open("solutions/payload_stack", 'rb') as bites:
         return send_file(io.BytesIO(bites.read()), download_name='payload_stack')
    
 @app.route('/payload_shellcode', methods=['GET'])
