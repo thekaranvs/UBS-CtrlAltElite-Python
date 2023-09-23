@@ -32,7 +32,7 @@ def digitalColonyEntry(input):
     genFifty = input[1]
     newColony = result[1]
     remainingGens = genFifty['generations'] - genTen['generations']
-    result = calculateWeight(newColony, remainingGens)
+    result = calculateWeight(newColony, 1)
     output.append(str(result[0]))
 
     return output
