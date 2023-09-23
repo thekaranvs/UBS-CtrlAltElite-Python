@@ -1,5 +1,3 @@
-import json
-
 def runCode(code, cases):
 
     outcomes = []
@@ -8,19 +6,26 @@ def runCode(code, cases):
         variables = case.copy()
         is_solvable = True
         flag1 = True
+        endIfList = []
         whitelist = case.copy().keys()
 
-        print(variables)
+        # print(variables)
 
         try:
             for line in code:
                 # print(line, {var: value for var, value in variables.items() if var in whitelist})
-                if line.startswith('if'):
-                    condition = line[3:].strip()
-                    flag1 = eval(condition, variables)                        
+                if  line.startswith('if'):
+                    if flag1:
+                        condition = line[3:].strip()
+                        flag1 = eval(condition, variables)
+                    else:
+                        endIfList.append(0)                
                         
                 elif line.startswith('endif'):
-                    flag1 = True
+                    if len(endIfList) != 0:
+                        endIfList.pop()
+                    else:
+                        flag1 = True
                     continue
                 elif flag1:
                     # print("entered")
@@ -30,6 +35,7 @@ def runCode(code, cases):
                     exec(line, variables)
 
         except Exception:
+            print("testing if entered")
             is_solvable = False
 
         variables = {var: int(value) for var, value in variables.items() if var in whitelist}
