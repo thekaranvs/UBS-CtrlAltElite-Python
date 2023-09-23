@@ -11,22 +11,21 @@ def returnFruits(text):
     f = case["f"]
 
     n = len(f)
-    dp = [[[0, ""] for _ in range(v + 1)] for _ in range(w + 1)]
+    dp = [[0 for _ in range(v + 1)] for _ in range(w + 1)]
 
     for i in range(1, n + 1):
         weight, volume, value = f[i-1]
 
-        for j in range(w+1):
-            for k in range(v+1):
+        for j in range(w, weight-1, -1):
+            for k in range(v, volume-1, -1):
                 if weight <= j and volume <= k:
-                    if dp[j - weight][k - volume][0] + value > dp[j][k][0]:
-                        dp[j][k][0] = dp[j - weight][k - volume][0] + value
-                        dp[j][k][1] = (dp[j - weight][k - volume][1] + str(i))
+                    if dp[j - weight][k - volume] + value > dp[j][k]:
+                        dp[j][k] = dp[j - weight][k - volume] + value
 
 
-    output = dp[w][v][1] + "0"
+    output = dp[w][v]
 
-    return output
+    return str(output)
 
     # currWeight = 0
     # currVolume = 0
@@ -58,13 +57,11 @@ def returnFruits(text):
     #                 values.append((f[i][2], i))
     #                 break
         
-    # output = ""
+    # output = 0
     # for value in values:
-    #     output += str(value[1]+1)
+    #     output += value[0]
 
-    # output += "0"
-
-    # return(output)
+    # return(str(output))
 
 
 
