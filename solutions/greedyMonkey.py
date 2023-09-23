@@ -23,14 +23,14 @@ def returnFruits(text):
             for value in values:
                 if value[0] < f[i][2] and currWeight - f[value[1]][0] + f[i][0] <= w:
                     values.remove(value)
-                    values.append(f[i][2], i)
+                    values.append((f[i][2], i))
                     break
         elif (currWeight + f[i][0]) <= w and (currVolume + f[i][1]) > v:
             values.sort()
             for value in values:
                 if value[0] < f[i][2] and currVolume - f[value[1]][1] + f[i][1] <= v:
                     values.remove(value)
-                    values.append(f[i][2], i)
+                    values.append((f[i][2], i))
                     break
         else:
             values.sort()
