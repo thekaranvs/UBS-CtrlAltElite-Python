@@ -3,6 +3,7 @@ from solutions.lazyDev import *
 from solutions.greedyMonkey import *
 from solutions.digitalColony import *
 from solutions.railwayBuilder import *
+from solutions.airportCheckin import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -27,6 +28,11 @@ def greedyMonkey():
 def railwayBuilder():
    inputData = request.json
    return jsonify(railwayBuilderEntry(inputData))
+
+@app.route('/airport', methods=['POST'])
+def airportCheckin():
+   inputData = request.json
+   return jsonify(airportCheckinEntry(inputData))
 
 # main driver function
 if __name__ == '__main__':
