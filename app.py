@@ -10,6 +10,7 @@ from solutions.calendarScheduling import *
 from solutions.pieChart import *
 from solutions.parkingLot import *
 from solutions.teleportation import *
+from solutions.maze3d import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -84,6 +85,11 @@ def payloadShellcode():
 def teleportation():
    inputData = request.json
    return str(teleportationEntry(inputData))
+
+@app.route('/3dmaze', methods=['POST'])
+def maze3d():
+   inputData = request.json
+   return jsonify(maze3DEntry(inputData))
 
 # main driver function
 if __name__ == '__main__':
