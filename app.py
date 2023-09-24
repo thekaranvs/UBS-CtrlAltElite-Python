@@ -9,6 +9,7 @@ from solutions.airportCheckin import *
 from solutions.calendarScheduling import *
 from solutions.pieChart import *
 from solutions.parkingLot import *
+from solutions.teleportation import *
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -78,6 +79,11 @@ def payloadStack():
 def payloadShellcode():
    with open("solutions/payload_crackme", 'rb') as bites:
         return send_file(io.BytesIO(bites.read()), download_name='payload_shellcode')
+
+@app.route('/teleportation', methods=['POST'])
+def teleportation():
+   inputData = request.json
+   return str(teleportationEntry(inputData))
 
 # main driver function
 if __name__ == '__main__':

@@ -1,42 +1,36 @@
 import math
 
-def calculate_distance(point1, point2):
-    x1, y1 = point1
-    x2, y2 = point2
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+def calculate_min_distance_delivery(k, p, q):
+    total_distance = 0
+    current_location = [0, 0]
 
-def minimum_distance_travel(k, p, q):
-    n = len(q)
-    
-    # Calculate distances between starting point and teleportation hubs
-    hub_distances = [calculate_distance((0, 0), hub) for hub in p]
+    # Iterate over each delivery location
+    for i in range(len(q)):
+        # Check if there are remaining teleportation orbs
+        if k > 0:
+            min_teleport_distance = math.sqrt((q[i][0] - current_location[0])**2 + (q[i][1] - current_location[1])**2)
+            teleport_hub_index = -1
+            for j in range(len(p)):
+                teleport_distance = math.sqrt((p[j][0] - q[i][0])**2 + (p[j][1] - q[i][1])**2)
+                if teleport_distance < min_teleport_distance:
+                    min_teleport_distance = teleport_distance
+                    teleport_hub_index = j
 
-    # Initialize the dynamic programming table
-    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
-    dp[0][k] = 0
+            if min_teleport_distance < math.sqrt((current_location[0] - q[i][0])**2 + (current_location[1] - q[i][1])**2):
+                total_distance += min_teleport_distance
+                k -= 1
+                current_location = q[i]
+            else:
+                # Calculate Euclidean distance from current location to delivery location
+                distance = math.sqrt((current_location[0] - q[i][0])**2 + (current_location[1] - q[i][1])**2)
+                total_distance += distance
+        else:
+            # Calculate Euclidean distance from current location to delivery location
+            distance = math.sqrt((current_location[0] - q[i][0])**2 + (current_location[1] - q[i][1])**2)
+            total_distance += distance
+        current_location = q[i]
 
-    for i in range(1, n + 1):
-        for j in range(k + 1):
-            # Case 1: Teleport to the current item destination directly
-            dp[i][j] = min(dp[i][j], dp[i - 1][j] + calculate_distance(q[i - 1], q[i - 2]))
+    return round(total_distance, 2)
 
-            for l in range(len(p)):
-                # Case 2: Teleport to the current item destination from a teleportation hub
-                if j > 0:
-                    dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + calculate_distance(p[l], q[i - 1]) + calculate_distance(q[i - 1], q[i - 2]))
-
-    return dp[n][k]
-
-# Test case
-input_data = {
-    "k": 10,
-    "p": [[0, 0], [0, 100], [100, 0], [100, 100]],
-    "q": [[1, 0], [1, 100], [99, 0], [99, 100]]
-}
-
-k = input_data["k"]
-p = input_data["p"]
-q = input_data["q"]
-
-result = minimum_distance_travel(k, p, q)
-print(result)
+def teleportationEntry(input):
+    return calculate_min_distance_delivery(input['k'], input['p'], input['q'])
